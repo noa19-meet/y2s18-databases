@@ -1,4 +1,4 @@
-from knowledge_model import Base, Knowledge
+from knowledge_model import Base, Tv_rating
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -8,15 +8,26 @@ Base.metadata.create_all(engine)
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-def add_article():
-	pass
+def add_article(name,tv_show,rating,gener):
+	tvv=Tv_rating(
+		name=name,
+		tv_show=tv_show,
+		rating=rating,
+		gener=gener)
+	session.add(tvv)
+	session.commit()
+add_article("hthr","the big bang",10,"comedy")
 
 def query_all_articles():
-	pass
 
-def query_article_by_topic():
-	pass
+	return session.query(Tv_rating).all()
 
+
+def query_article_by_name(name1):
+	return session.query(Tv_rating).filter_by(name=name1).all()
+	
+print(query_all_articles())
+#print(query_article_by_name("hthr"))
 def delete_article_by_topic():
 	pass
 
